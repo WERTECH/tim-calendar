@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  firebaseConfig : {
+  firebase : {
     apiKey: "AIzaSyD5jXpHAfqGn9wnuTLrWb7QWaONxVLO5R0",
     authDomain: "tim-calendar-fbe2b.firebaseapp.com",
     databaseURL: "https://tim-calendar-fbe2b.firebaseio.com",
