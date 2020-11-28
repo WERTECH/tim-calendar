@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "tim-calendar-fbe2b": {
+      "hosting": {
+        "tim-calendar": [
+          "tim-calendar-fbe2b"
+        ]
+      }
+    }
+  }
+}
