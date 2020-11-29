@@ -1,6 +1,8 @@
+import { UserService } from './../user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { User } from '../user.model';
 
 @Component({
   selector: 'app-email-login',
@@ -13,7 +15,9 @@ export class EmailLoginComponent implements OnInit {
   loading = false;
   serverMessage: string;
 
-  constructor(private afAuth: AngularFireAuth, private fb: FormBuilder) { }
+  constructor(private afAuth: AngularFireAuth,
+    private fb: FormBuilder,
+    private userSerive: UserService) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -23,10 +27,13 @@ export class EmailLoginComponent implements OnInit {
       password: ['', [Validators.minLength(6), Validators.required]],
       passwordConfirm: ['', []]
     });
+
   }
 
   changeType(val) {
     this.type = val;
+    this.form.reset();
+    this.serverMessage ='';
   }
 
   get isLogin() {
@@ -69,11 +76,16 @@ export class EmailLoginComponent implements OnInit {
     const password = this.password.value;
 
     try {
-      if (this.isSignup) {
+      if (this.isLogin) {
         await this.afAuth.signInWithEmailAndPassword(email, password);
       }
       if (this.isSignup) {
-        await this.afAuth.createUserWithEmailAndPassword(email, password);
+        await this.afAuth.createUserWithEmailAndPassword(email, password).then(result => {
+          const user = {... new User(), ... this.form.value, 'id':result.user.uid};
+
+          console.log(user);
+          this.userSerive.createUser(user)
+        } );
       }
       if (this.isPasswordReset) {
         await this.afAuth.sendPasswordResetEmail(email);
