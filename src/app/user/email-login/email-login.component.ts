@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../user.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-email-login',
@@ -17,6 +18,7 @@ export class EmailLoginComponent implements OnInit {
 
   constructor(private afAuth: AngularFireAuth,
     private fb: FormBuilder,
+    private router: Router,
     private userSerive: UserService) { }
 
   ngOnInit(): void {
@@ -78,6 +80,8 @@ export class EmailLoginComponent implements OnInit {
     try {
       if (this.isLogin) {
         await this.afAuth.signInWithEmailAndPassword(email, password);
+        //TODO:// admin route soon
+        this.router.navigateByUrl('/');
       }
       if (this.isSignup) {
         await this.afAuth.createUserWithEmailAndPassword(email, password).then(result => {
@@ -86,6 +90,8 @@ export class EmailLoginComponent implements OnInit {
           console.log(user);
           this.userSerive.createUser(user)
         } );
+
+        this.router.navigateByUrl('/');
       }
       if (this.isPasswordReset) {
         await this.afAuth.sendPasswordResetEmail(email);

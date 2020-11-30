@@ -5,9 +5,10 @@ export class Appointment {
     public phoneNumber: string ='',
     public email: string ='',
     public company: string ='',
+    public brief: string ='',
     public town: string ='',
     public appointmentDate: string = '',
-    public appointMentTime: string = ''
+    public appointmentTime: string = ''
   ){}
 
 }

@@ -18,12 +18,17 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatTabsModule } from '@angular/material/tabs';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatNativeDateModule} from '@angular/material/core';
 
 const components = [
   AppContainerComponent
 ];
 
 const modules = [
+  MatDatepickerModule,
+  MatNativeDateModule,
   MatMenuModule,
   MatSnackBarModule,
   MatButtonModule,
@@ -43,6 +48,7 @@ const modules = [
   ReactiveFormsModule,
   MatTableModule,
   MatPaginatorModule,
+  MatTabsModule,
   MatSortModule
 ];
 
