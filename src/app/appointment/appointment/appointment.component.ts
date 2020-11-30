@@ -5,6 +5,7 @@ import { FormBuilder, FormGroupDirective, Validators } from '@angular/forms';
 import { User } from 'src/app/user/user.model';
 import { Appointment } from '../appointment.model';
 import { Subscription } from 'rxjs';
+import { min } from 'rxjs/operators';
 
 @Component({
   selector: 'app-appointment',
@@ -13,9 +14,10 @@ import { Subscription } from 'rxjs';
 })
 export class AppointmentComponent implements OnInit {
   minDate = new Date(Date.now());
-  selectedDate: string = '';
+  _selectedDate: string = '';
   selectedTime: string = '';
   availableTime: string[] = [];
+  appointments: Appointment [] = [];
   loginUser: User;
   loading:boolean  = false;
   sub: Subscription;
@@ -46,6 +48,7 @@ export class AppointmentComponent implements OnInit {
         this.loginUser = user ? (user): new User();
         console.log('login user: ', this.loginUser)
 
+        this.setAvailabeTime(this.minDate.toDateString());
         this.initializeFormFields();
       });
 
@@ -64,14 +67,27 @@ export class AppointmentComponent implements OnInit {
     name: null,
     phoneNumber: null,
     company: [null, Validators.required],
-    appointmentDate: [null, Validators.required],
+    appointmentDate: [this.minDate, Validators.required],
     appointmentTime: [null, Validators.required],
     brief: [null, Validators.required],
     town: [null, Validators.required],
   });
 
-  hasUnitNumber = false;
 
+  setAvailabeTime(selectedDate = this.appointmentForm.get('appointmentDate').value.toString()) {
+    console.log('selected date',selectedDate);
+    this.sub = this.appointmentService
+      .getAppointmentByDate(selectedDate)
+      .subscribe(appointments => {
+        this.availableTime = this.appointmentTime;
+        appointments.forEach(appointment => {
+          console.log(appointment.appointmentTime);
+        this.availableTime = this.availableTime.filter(appTime => appTime != appointment.appointmentTime);
+        console.log('filtered',appointment.appointmentTime);
+        })
+        console.log('after', this.availableTime);
+      });
+  }
 
   constructor(private fb: FormBuilder,
     private appointmentService: AppointmentService,

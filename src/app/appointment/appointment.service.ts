@@ -36,8 +36,9 @@ export class AppointmentService {
   }
 // get appointments with date
   getAppointmentByDate(appointmentDate:string) {
-    return this.db.collection('appointments',
-    ref => ref.where('appointmentDate', '==', appointmentDate)).get();
+    return this.db.collection<Appointment>('appointments',
+    ref => ref.where('appointmentDate', '==', appointmentDate))
+    .valueChanges({idField:'id'});
   }
 
   // get all appointments
