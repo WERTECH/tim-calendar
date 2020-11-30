@@ -1,0 +1,11 @@
+mat-dialog-title, mat-dialog-content {
+  display:flex;
+  justify-content:center;
+  text-align: center;
+}
+
+
+.example-spacer {
+  flex: 1 1 auto;
+  color: white;
+}

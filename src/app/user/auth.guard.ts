@@ -18,8 +18,7 @@ export class AuthGuard implements CanActivate {
 
     const user = await this.afAuth.currentUser;
     const isLoggedIn = !!user || this.authSerivice.isLoggedIn();
-    console.log('from auth gard', isLoggedIn);
-    console.log('Local login status');
+    
     if(!isLoggedIn) {//return true;
       this.snack.authError();
     }

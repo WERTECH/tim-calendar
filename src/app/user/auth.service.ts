@@ -45,7 +45,7 @@ export class AuthService {
     return true;
   }
 
-  isLoggedIn() {console.log('is login');
+  isLoggedIn() {
     return !!this.getLoggedUser();
   }
 
