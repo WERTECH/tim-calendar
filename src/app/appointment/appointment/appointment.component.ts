@@ -1,3 +1,4 @@
+import { AuthService } from './../../user/auth.service';
 import { AppointmentService } from './../appointment.service';
 import { UserService } from './../../user/user.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -41,6 +42,19 @@ export class AppointmentComponent implements OnInit {
   //   console.log(user);
   // }
   ngOnInit(): void {
+    this.loginUser = this.authService.getLoggedUser();
+    this.setAvailabeTime(this.minDate.toDateString());
+
+    if(!this.loginUser || this.loginUser.name === null) {
+      this.getUserCureentUserF();
+    } else {
+      this.initializeFormFields();
+    }
+
+  }
+
+  // get current user from firebase
+  getUserCureentUserF(){
     this.sub = this.userSerive
       .getLoginUser()
       .subscribe(user => {
@@ -50,7 +64,6 @@ export class AppointmentComponent implements OnInit {
         this.setAvailabeTime(this.minDate.toDateString());
         this.initializeFormFields();
       });
-
   }
 
   ngOnDestroy() {
@@ -81,22 +94,21 @@ export class AppointmentComponent implements OnInit {
         this.availableTime = this.appointmentTime;
         appointments.forEach(appointment => {;
         this.availableTime = this.availableTime.filter(appTime => appTime != appointment.appointmentTime);
-        console.log('filtered',appointment.appointmentTime);
         })
       });
   }
 
   constructor(private fb: FormBuilder,
+    private authService: AuthService,
     private appointmentService: AppointmentService,
-    private userSerive: UserService) {console.log(this.minDate);}
+    private userSerive: UserService) {}
 
   onSubmit() {
     const appDate = new Date(this.appointmentForm.get('appointmentDate').value).toDateString();
     const newAppointment = {... new Appointment(), ... this.appointmentForm.value, appointmentDate: appDate, email: this.loginUser.email}
-    console.log(newAppointment)
+
     this.appointmentService.createAppointment(newAppointment)
       .then(result => {
-        console.log(result);
         alert('Saved Thanks!');
 
         this.appointmentForm.reset();

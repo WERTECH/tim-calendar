@@ -1,3 +1,4 @@
+import { AuthService } from './../auth.service';
 import { UserService } from './../user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
@@ -19,6 +20,7 @@ export class EmailLoginComponent implements OnInit {
   constructor(private afAuth: AngularFireAuth,
     private fb: FormBuilder,
     private router: Router,
+    private authServise: AuthService,
     private userSerive: UserService) { }
 
   ngOnInit(): void {
@@ -79,9 +81,10 @@ export class EmailLoginComponent implements OnInit {
 
     try {
       if (this.isLogin) {
-        await this.afAuth.signInWithEmailAndPassword(email, password);
-        //TODO:// admin route soon
-        this.router.navigateByUrl('/');
+        await this.authServise.login(email, password).then(_=>{
+          //TODO:// admin route soon
+          this.router.navigateByUrl('/');
+        });
       }
       if (this.isSignup) {
         await this.afAuth.createUserWithEmailAndPassword(email, password).then(result => {
@@ -89,6 +92,7 @@ export class EmailLoginComponent implements OnInit {
 
           console.log(user);
           this.userSerive.createUser(user)
+          this.authServise.doLoginUser(user);
         } );
 
         this.router.navigateByUrl('/');

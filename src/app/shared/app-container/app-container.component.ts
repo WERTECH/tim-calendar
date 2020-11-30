@@ -1,3 +1,4 @@
+import { AuthService } from './../../user/auth.service';
 import { Component } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
@@ -16,13 +17,13 @@ export class AppContainerComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private afAuth: AngularFireAuth) {}
+  constructor(private breakpointObserver: BreakpointObserver, private authSerive: AuthService) {}
 
     isLogin() {
-      return true;
+      return this.authSerive.isLoggedIn();
     }
 
     logout() {
-      this.afAuth.signOut();
+      this.authSerive.logout();
     }
 }
