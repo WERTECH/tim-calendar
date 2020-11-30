@@ -2,14 +2,100 @@
 <h1 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h1>
 <div mat-dialog-content>
   <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
-    <input placeholder="{{action}} Name" matInput [(ngModel)]="local_data.name">
+
+
+
+  <form [formGroup]="appointmentForm" novalidate>
+
+    <mat-card class="shipping-card">
+
+      <mat-card-header>
+        <mat-card-title>Schedule an appointment with Tim</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="row">
+          <div class="col">
+
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+          <!-- #docregion toggle -->
+            <input formControlName="appointmentDate" (change)="setAvailabeTime()"
+            [min]="minDate" matInput [matDatepicker]="picker" disabled>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker disabled="false" #picker></mat-datepicker>
+            <mat-error *ngIf="appointmentForm.controls['appointmentDate'].hasError('required')">
+              Appointment date is <strong>required</strong>
+            </mat-error>
+          <!-- #enddocregion toggle -->
+          </mat-form-field>
+
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width" *ngIf="availableTime.length > 0">
+              <mat-select placeholder="Time" formControlName="appointmentTime">
+                <mat-option *ngFor="let time of availableTime" [value]="time">
+                  {{ time }}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="appointmentForm.controls['appointmentTime'].hasError('required')">
+                Appointment time (t) is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+            <span *ngIf="availableTime.length == 0">No avalailable time on the selected date</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Name" formControlName="name" readonly>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Phone number" formControlName="phoneNumber" readonly>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Company" formControlName="company">
+              <mat-error *ngIf="appointmentForm.controls['company'].hasError('required')">
+                Company name is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Town" formControlName="town">
+              <mat-error *ngIf="appointmentForm.controls['town'].hasError('required')">
+                Town is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <mat-form-field class="full-width">
+              <textarea matInput placeholder="Brief of discussion" formControlName="brief"></textarea>
+              <mat-error *ngIf="appointmentForm.controls['brief'].hasError('required')">
+                Brief of discussion is <strong>required</strong>
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </form>
+
+
   </mat-form-field>
   <ng-template #elseTemplate>
     Delete <b>{{local_data.appointmentDate}} - {{local_data.appointmentTime}} appointment </b>?
   </ng-template>
 </div>
 <div mat-dialog-actions>
-  <button mat-button  color="warn" (click)="doAction()">{{action}}</button>
+  <button mat-button [disabled]="appointmentForm.invalid" color="warn" (click)="doAction()">{{action}}</button>
   <span class="example-spacer"> - </span>
   <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
 </div>

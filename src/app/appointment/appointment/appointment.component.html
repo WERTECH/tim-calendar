@@ -1,9 +1,12 @@
 
 
 <!-- Current approach -->
+<mat-card *ngIf="showBookingForm">
+  <button mat-raised-button (click)="toggleShowForm()"
+  color="primary" type="submit">Book appointment</button>
+</mat-card >
 
-
-  <form [formGroup]="appointmentForm" novalidate (ngSubmit)="onSubmit()">
+  <form *ngIf="!showBookingForm" [formGroup]="appointmentForm" novalidate (ngSubmit)="onSubmit()">
 
     <mat-card class="shipping-card">
 

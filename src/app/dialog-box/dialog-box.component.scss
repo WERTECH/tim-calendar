@@ -9,3 +9,68 @@ mat-dialog-title, mat-dialog-content {
   flex: 1 1 auto;
   color: white;
 }
+.full-width {
+  width: 100%;
+}
+
+.action-list {
+  display:flex;
+  justify-content:center;
+  text-align: center !important;
+}
+
+.shipping-card {
+  min-width: 120px;
+  margin: 20px auto;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+
+mat-card {
+  min-width: 120px;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+mat-form-field {
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.server-error {
+  margin: 8px 0;;
+}
+
+
+input {
+  height: 2em;
+  div.mat-form-field-infix {
+    padding: .3em 0;
+    input.mat-input-element {
+      vertical-align: top;
+    }
+  }
+}
+div.mat-form-field-wrapper{
+  padding-bottom: 1.15em;
+}

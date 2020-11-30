@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class AppointmentComponent implements OnInit {
   minDate = new Date(Date.now());
+  showBookingForm: boolean = false;
   _selectedDate: string = '';
   selectedTime: string = '';
   availableTime: string[] = [];
@@ -51,6 +52,10 @@ export class AppointmentComponent implements OnInit {
       this.initializeFormFields();
     }
 
+  }
+
+  toggleShowForm(){
+    this.showBookingForm = !this.showBookingForm;
   }
 
   // get current user from firebase
@@ -112,7 +117,8 @@ export class AppointmentComponent implements OnInit {
         alert('Saved Thanks!');
 
         this.appointmentForm.reset();
-        this.formGroupDirective.resetForm();
+        // this.formGroupDirective.resetForm();
+        this.showBookingForm = true;
       })
       .catch(err=> console.log(err));
   }
