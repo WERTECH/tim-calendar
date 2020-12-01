@@ -56,8 +56,10 @@ export class AppointmentListComponent implements OnInit {
 
   updateRowData(row_obj){
     this.data = this.data.filter((value,key)=>{
+      console.log(value.id, row_obj.id)
       if(value.id == row_obj.id){
-        value.name = row_obj.name;
+        value = {...row_obj};
+        this.appointmentService.updateAppointment(value.id, value);
       }
       return true;
     });
@@ -65,7 +67,6 @@ export class AppointmentListComponent implements OnInit {
 
   deleteRowData(row_obj){
     this.data = this.data.filter((value,key)=>{
-      console.log(value,'this to del',row_obj.id);
       this.appointmentService.deleteAppointment(row_obj.id);
       return value.id != row_obj.id;
     });

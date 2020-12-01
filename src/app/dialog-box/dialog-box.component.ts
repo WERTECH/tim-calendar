@@ -4,7 +4,7 @@ import { Component, Inject, OnInit, Optional } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AppointmentService } from '../appointment/appointment.service';
-import { ThrowStmt } from '@angular/compiler';
+
 
 @Component({
   selector: 'app-dialog-box',
@@ -54,7 +54,11 @@ export class DialogBoxComponent {
     }
 
     doAction(){
-      if(this.action=='Update'){this.local_data = {...this.appointmentTime.values}}
+      if(this.action=='Update'){
+
+    const appDate = new Date(this.appointmentForm.get('appointmentDate').value).toDateString();
+        this.local_data = {...this.appointmentForm.value, appointmentDate: appDate, id:this.local_data.id}
+      }
       this.dialogRef.close({event:this.action,data:this.local_data});
     }
 

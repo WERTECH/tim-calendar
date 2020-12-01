@@ -117,7 +117,8 @@ export class AppointmentComponent implements OnInit {
         alert('Saved Thanks!');
 
         this.appointmentForm.reset();
-        // this.formGroupDirective.resetForm();
+        this.formGroupDirective.resetForm();
+        this.initializeFormFields();
         this.showBookingForm = true;
       })
       .catch(err=> console.log(err));

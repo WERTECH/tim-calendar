@@ -95,7 +95,7 @@
   </ng-template>
 </div>
 <div mat-dialog-actions>
-  <button mat-button [disabled]="appointmentForm.invalid" color="warn" (click)="doAction()">{{action}}</button>
+  <button mat-button [disabled]="action == 'Update'? appointmentForm.invalid: false" color="warn" (click)="doAction()">{{action}}</button>
   <span class="example-spacer"> - </span>
   <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
 </div>
