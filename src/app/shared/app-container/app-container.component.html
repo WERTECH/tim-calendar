@@ -11,7 +11,7 @@
        <a mat-list-item routerLink="/login" *ngIf="!isLogin()"
         routerLinkActive="router-link-active" (click)="drawer.close()" >Login</a>
        <a mat-list-item routerLink="/login" *ngIf="isLogin()"
-       routerLinkActive="router-link-active" (click)="drawer.close(); logout()" >Logout</a>
+       routerLinkActive="router-link-active" color="accent" (click)="drawer.close(); logout()" >Logout</a>
 
     </mat-nav-list>
   </mat-sidenav>
@@ -37,7 +37,7 @@
         <a mat-button routerLink="/login" *ngIf="!isLogin()"
          routerLinkActive="router-link-active"  >Login</a>
          <a mat-button routerLink="/login" *ngIf="isLogin()"
-         routerLinkActive="router-link-active" (click)="logout()" >Logout</a>
+         routerLinkActive="router-link-active" color="accent" (click)="logout()" >Logout</a>
 
       </div>
     </mat-toolbar>

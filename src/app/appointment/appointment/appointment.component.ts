@@ -40,7 +40,7 @@ export class AppointmentComponent implements OnInit {
 
   // getUserDetails() {
   //   const user = this.userSerive.getLoginUser();
-  //   console.log(user);
+  //   
   // }
   ngOnInit(): void {
     this.loginUser = this.authService.getLoggedUser();
@@ -64,7 +64,6 @@ export class AppointmentComponent implements OnInit {
       .getLoginUser()
       .subscribe(user => {
         this.loginUser = user ? (user): new User();
-        console.log('login user: ', this.loginUser)
 
         this.setAvailabeTime(this.minDate.toDateString());
         this.initializeFormFields();

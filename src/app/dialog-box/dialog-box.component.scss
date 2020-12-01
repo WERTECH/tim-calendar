@@ -3,7 +3,9 @@ mat-dialog-title, mat-dialog-content {
   justify-content:center;
   text-align: center;
 }
-
+.align-text-left {
+  text-align: left !important;
+}
 
 .example-spacer {
   flex: 1 1 auto;

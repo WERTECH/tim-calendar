@@ -33,13 +33,15 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element" class="action-link">
-        <a color="primary" mat-icon-button (click)="openDialog('Update',element)">View</a> |
-        <a color="accent" mat-icon-button
-        *ngIf="currentUser.id == element.uid"
-        (click)="openDialog('Update',element)">Edit</a> |
-        <a color="warn" mat-icon-button
-        *ngIf="currentUser.id == element.uid"
-         (click)="openDialog('Delete',element)">Delete</a>
+        <a color="primary" mat-button (click)="openDialog('View',element)">View</a>
+        <span *ngIf="currentUser.id == element.uid">
+          |
+          <a color="accent" mat-button
+          (click)="openDialog('Update',element)">Edit</a>
+          |
+          <a color="warn" mat-button
+           (click)="openDialog('Delete',element)">Delete</a>
+        </span>
       </td>
     </ng-container>
 

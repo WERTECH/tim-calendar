@@ -1,101 +1,160 @@
 
 <h1 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h1>
 <div mat-dialog-content>
-  <mat-form-field *ngIf="action != 'Delete'; else elseTemplate">
+  <div *ngIf="action != 'Delete'; else elseTemplate">
 
+    <div *ngIf="action == 'View'; else formTemplate" class="align-text-left">
 
-
-  <form [formGroup]="appointmentForm" novalidate>
-
-    <mat-card class="shipping-card">
-
-      <mat-card-header>
-        <mat-card-title>Schedule an appointment with Tim</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
+      <mat-card>
         <div class="row">
-          <div class="col">
-
-          <mat-form-field appearance="fill">
-            <mat-label>Choose a date</mat-label>
-          <!-- #docregion toggle -->
-            <input formControlName="appointmentDate" (change)="setAvailabeTime()"
-            [min]="minDate" matInput [matDatepicker]="picker" disabled>
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker disabled="false" #picker></mat-datepicker>
-            <mat-error *ngIf="appointmentForm.controls['appointmentDate'].hasError('required')">
-              Appointment date is <strong>required</strong>
-            </mat-error>
-          <!-- #enddocregion toggle -->
-          </mat-form-field>
-
-          </div>
-          <div class="col">
-            <mat-form-field class="full-width" *ngIf="availableTime.length > 0">
-              <mat-select placeholder="Time" formControlName="appointmentTime">
-                <mat-option *ngFor="let time of availableTime" [value]="time">
-                  {{ time }}
-                </mat-option>
-              </mat-select>
-              <mat-error *ngIf="appointmentForm.controls['appointmentTime'].hasError('required')">
-                Appointment time (t) is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <span *ngIf="availableTime.length == 0">No avalailable time on the selected date</span>
+          <div class="col align-text-left">
+            <h2>Appointment on {{ local_data.appointmentDate }} - {{ local_data.appointmentTime }}</h2>
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Name" formControlName="name" readonly>
-            </mat-form-field>
+          <div class="col align-text-left">
+            <p><strong>Appointment brief: </strong> {{local_data.brief}}</p>
           </div>
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Phone number" formControlName="phoneNumber" readonly>
-            </mat-form-field>
+        </div>
+
+        <h3 class=" align-text-left">Client info.</h3>
+        <div class="row">
+          <div class="col align-text-left">
+            <h3>Name:</h3>
+          </div>
+          <div class="col align-text-left">
+            {{ local_data.name }}
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Company" formControlName="company">
-              <mat-error *ngIf="appointmentForm.controls['company'].hasError('required')">
-                Company name is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
+          <div class="col align-text-left">
+            <h3>Phone number:</h3>
           </div>
-          <div class="col">
-            <mat-form-field class="full-width">
-              <input matInput placeholder="Town" formControlName="town">
-              <mat-error *ngIf="appointmentForm.controls['town'].hasError('required')">
-                Town is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
+          <div class="col align-text-left">
+            {{ local_data.phoneNumber }}
           </div>
         </div>
         <div class="row">
-          <div class="col">
-            <mat-form-field class="full-width">
-              <textarea matInput placeholder="Brief of discussion" formControlName="brief"></textarea>
-              <mat-error *ngIf="appointmentForm.controls['brief'].hasError('required')">
-                Brief of discussion is <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
+          <div class="col align-text-left">
+            <h3>Email:</h3>
+          </div>
+          <div class="col align-text-left">
+            {{ local_data.email }}
           </div>
         </div>
-      </mat-card-content>
-    </mat-card>
-  </form>
+        <div class="row">
+          <div class="col align-text-left">
+            <h3>Company</h3>
+          </div>
+          <div class="col align-text-left">
+            {{ local_data.company }}
+          </div>
+        </div>
+        <div class="row">
+          <div class="col align-text-left">
+            <h3>City</h3>
+          </div>
+          <div class="col align-text-left">
+            {{ local_data.town }}
+          </div>
+        </div>
+      </mat-card>
 
+    </div>
+    <ng-template #formTemplate>
 
-  </mat-form-field>
+      <form [formGroup]="appointmentForm" novalidate>
+
+        <mat-card class="shipping-card">
+
+          <mat-card-header>
+            <mat-card-title>Schedule an appointment with Tim</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="row">
+              <div class="col">
+
+              <mat-form-field appearance="fill">
+                <mat-label>Choose a date</mat-label>
+              <!-- #docregion toggle -->
+                <input formControlName="appointmentDate" (change)="setAvailabeTime()"
+                [min]="minDate" matInput [matDatepicker]="picker" disabled>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker disabled="false" #picker></mat-datepicker>
+                <mat-error *ngIf="appointmentForm.controls['appointmentDate'].hasError('required')">
+                  Appointment date is <strong>required</strong>
+                </mat-error>
+              <!-- #enddocregion toggle -->
+              </mat-form-field>
+
+              </div>
+              <div class="col">
+                <mat-form-field class="full-width" *ngIf="availableTime.length > 0">
+                  <mat-select placeholder="Time" formControlName="appointmentTime">
+                    <mat-option *ngFor="let time of availableTime" [value]="time">
+                      {{ time }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="appointmentForm.controls['appointmentTime'].hasError('required')">
+                    Appointment time (t) is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+                <span *ngIf="availableTime.length == 0">No avalailable time on the selected date</span>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Name" formControlName="name" readonly>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Phone number" formControlName="phoneNumber" readonly>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Company" formControlName="company">
+                  <mat-error *ngIf="appointmentForm.controls['company'].hasError('required')">
+                    Company name is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <input matInput placeholder="Town" formControlName="town">
+                  <mat-error *ngIf="appointmentForm.controls['town'].hasError('required')">
+                    Town is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <mat-form-field class="full-width">
+                  <textarea matInput placeholder="Brief of discussion" formControlName="brief"></textarea>
+                  <mat-error *ngIf="appointmentForm.controls['brief'].hasError('required')">
+                    Brief of discussion is <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </form>
+
+    </ng-template>
+
+  </div>
   <ng-template #elseTemplate>
     Delete <b>{{local_data.appointmentDate}} - {{local_data.appointmentTime}} appointment </b>?
   </ng-template>
 </div>
 <div mat-dialog-actions>
-  <button mat-button [disabled]="action == 'Update'? appointmentForm.invalid: false" color="warn" (click)="doAction()">{{action}}</button>
+  <button *ngIf="action !='View'" mat-button [disabled]="action == 'Update'? appointmentForm.invalid: false" color="warn" (click)="doAction()">{{action}}</button>
   <span class="example-spacer"> - </span>
-  <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button>{{action =='View' ? 'Close':'Cancel'}}</button>
 </div>

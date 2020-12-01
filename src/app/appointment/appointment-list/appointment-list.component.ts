@@ -55,7 +55,7 @@ export class AppointmentListComponent implements OnInit {
 
   openDialog(action,obj) {
     obj.action = action;
-    const dialogWidth = action =='Update' ? '600px' : '300px';
+    const dialogWidth = action !='Delete' ? '600px' : '300px';
     const dialogRef = this.dialog.open(DialogBoxComponent, {
       width: dialogWidth,
       data:obj
