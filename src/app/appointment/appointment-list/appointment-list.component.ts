@@ -1,5 +1,6 @@
+import { AuthService } from './../../user/auth.service';
 import { Appointment } from './../appointment.model';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
@@ -8,6 +9,7 @@ import { AppointmentService } from '../appointment.service';
 import { AppointmentListDataSource, AppointmentListItem } from './appointment-list-datasource';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBoxComponent } from 'src/app/dialog-box/dialog-box.component';
+import { User } from 'src/app/user/user.model';
 
 @Component({
   selector: 'app-appointment-list',
@@ -20,9 +22,12 @@ export class AppointmentListComponent implements OnInit {
   @ViewChild(MatTable) table: MatTable<AppointmentListItem>;
   data: Appointment[] = [];
   sub: Subscription;
+  isAdmin: boolean= false;
+  currentUser: User;
 
   constructor (private appointmentService: AppointmentService,
-    public dialog: MatDialog){}
+              private authServide: AuthService,
+              public dialog: MatDialog){}
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
 
@@ -30,11 +35,22 @@ export class AppointmentListComponent implements OnInit {
                                'appointmentDate', 'brief', 'action'];
 
   ngOnInit() {
-    this.sub = this.appointmentService
-    .getUserApointments()
-    .subscribe(appointments => {console.log(appointments)
-      this.data = appointments
-    });
+    this.currentUser = this.authServide.getLoggedUser();
+
+    if(this.authServide.isAdmin()){
+      this.isAdmin = true;
+      this.sub = this.appointmentService
+      .getAppointments()
+      .subscribe(
+        appointments => this.data = appointments
+      );
+    } else {
+      this.sub = this.appointmentService
+      .getUserApointments()
+      .subscribe(appointments => {
+        this.data = appointments
+      });
+    }
   }
 
   openDialog(action,obj) {

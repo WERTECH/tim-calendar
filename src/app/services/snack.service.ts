@@ -21,4 +21,17 @@ export class SnackService {
       )
       .subscribe();
   }
+
+  accessError() {
+    this.snackBar.open('Access denied!!', 'OK',{
+      duration: 5000
+    } );
+
+    return this.snackBar._openedSnackBarRef
+      .onAction()
+      .pipe(
+        tap(_ => this.router.navigate(['/']))
+      )
+      .subscribe();
+  }
 }

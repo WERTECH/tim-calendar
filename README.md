@@ -4,6 +4,7 @@ Client can login
 Client can see Tim's daily calendar (available time slot per day and hour)
 Client can book consulting appointments with Tim.
 Client edit and delete appointment
+Additon: Tim can view list of appointment schedules
 
 ### View Demo [here](https://tim-calendar-fbe2b.web.app) 
 https://tim-calendar-fbe2b.web.app
@@ -11,6 +12,8 @@ https://tim-calendar-fbe2b.web.app
 ### Test login
 email: test@gmail.com
 password: testpass@
+email: tim@gmail.com
+password: timpass#
 
 ### Installation
 Clone or download the repo

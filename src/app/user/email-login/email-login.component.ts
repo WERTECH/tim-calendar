@@ -90,7 +90,6 @@ export class EmailLoginComponent implements OnInit {
         await this.afAuth.createUserWithEmailAndPassword(email, password).then(result => {
           const user = {... new User(), ... this.form.value, 'id':result.user.uid};
 
-          console.log(user);
           this.userSerive.createUser(user)
           this.authServise.doLoginUser(user);
         } );

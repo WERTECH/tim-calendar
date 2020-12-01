@@ -6,8 +6,10 @@
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item routerLink="/" routerLinkActive="active" (click)="drawer.close()" >Home</a>
-      <a mat-list-item routerLink="/login" *ngIf="!isLogin()"
-       routerLinkActive="router-link-active" (click)="drawer.close()" >Login</a>
+      <a mat-list-item routerLink="/appointment" *ngIf="isLogin() && authSerive.isAdmin()"
+       routerLinkActive="router-link-active" (click)="drawer.close()" >Appointments</a>
+       <a mat-list-item routerLink="/login" *ngIf="!isLogin()"
+        routerLinkActive="router-link-active" (click)="drawer.close()" >Login</a>
        <a mat-list-item routerLink="/login" *ngIf="isLogin()"
        routerLinkActive="router-link-active" (click)="drawer.close(); logout()" >Logout</a>
 
@@ -30,6 +32,8 @@
         <a  mat-button routerLink="/" routerLinkActive="active" (click)="drawer.close()" >Home</a>
 
 
+        <a mat-button routerLink="/appointment" *ngIf="isLogin() && authSerive.isAdmin()"
+         routerLinkActive="router-link-active"  >Appointments</a>
         <a mat-button routerLink="/login" *ngIf="!isLogin()"
          routerLinkActive="router-link-active"  >Login</a>
          <a mat-button routerLink="/login" *ngIf="isLogin()"

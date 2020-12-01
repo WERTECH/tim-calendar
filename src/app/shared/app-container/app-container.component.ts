@@ -17,7 +17,7 @@ export class AppContainerComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, private authSerive: AuthService) {}
+  constructor(private breakpointObserver: BreakpointObserver, public authSerive: AuthService) {}
 
     isLogin() {
       return this.authSerive.isLoggedIn();

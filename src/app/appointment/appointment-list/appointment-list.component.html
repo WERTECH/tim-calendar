@@ -1,5 +1,5 @@
 <div class="mat-elevation-z8">
-  <h4 class="align-center">Your Appointment(s) With Tim</h4>
+  <h4 md-headline class="align-center">{{isAdmin?"Tim's Schedule List" :"Your Appointment(s) With Tim"}}</h4>
   <table mat-table [dataSource]="data" class="mat-elevation-z8">
 
     <!--- Note that these columns can be defined in any order.
@@ -33,8 +33,13 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef> Action </th>
       <td mat-cell *matCellDef="let element" class="action-link">
-        <a (click)="openDialog('Update',element)">Edit</a> |
-        <a (click)="openDialog('Delete',element)">Delete</a>
+        <a color="primary" mat-icon-button (click)="openDialog('Update',element)">View</a> |
+        <a color="accent" mat-icon-button
+        *ngIf="currentUser.id == element.uid"
+        (click)="openDialog('Update',element)">Edit</a> |
+        <a color="warn" mat-icon-button
+        *ngIf="currentUser.id == element.uid"
+         (click)="openDialog('Delete',element)">Delete</a>
       </td>
     </ng-container>
 
